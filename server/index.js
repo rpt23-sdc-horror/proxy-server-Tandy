@@ -1,3 +1,5 @@
+require('newrelic');
+require('dotenv').config();
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const express = require('express');
 const path = require('path');
@@ -10,7 +12,7 @@ app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/photos/:productid/:styleid', createProxyMiddleware({
-  target: 'http://localhost:3000',
+  target: process.env.PHOTO_GALLERY_URL,
   changeOrigin: true
 }))
 
